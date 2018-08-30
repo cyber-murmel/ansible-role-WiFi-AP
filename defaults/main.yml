@@ -1,0 +1,13 @@
+---
+channel: default
+share_method: bridge
+ieee80211n: 1
+ieee80211ac: 1
+country: DE
+freq_band: 5
+wifi_iface: wlp0s0
+internet_iface: br0
+ssid: ESPRESSObin
+passphrase: marvelll
+create_ap_conf: "/etc/create_ap_{{ freq_band }}.conf"
+create_ap_service: "create_ap_{{ freq_band }}.service"

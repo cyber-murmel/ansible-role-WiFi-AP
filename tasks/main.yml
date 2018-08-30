@@ -1,0 +1,29 @@
+---
+- name: Installing necessary packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ packages }}"
+  become: yes
+- name: "Deploying config: {{ create_ap_conf }}"
+  template:
+    dest: "{{ create_ap_conf }}"
+    group: root
+    mode: '0644'
+    owner: root
+    src: create_ap.conf.j2
+  become: yes
+- name: "Deploying systemd unit file: /usr/lib/systemd/system/{{ create_ap_service }}"
+  template:
+    dest: "/usr/lib/systemd/system/{{ create_ap_service }}"
+    group: root
+    mode: '0644'
+    owner: root
+    src: create_ap.service.j2
+  become: yes
+- name: "Enabling {{ create_ap_service }} service and start if not running"
+  service:
+    name: "{{ create_ap_service }}"
+    state: started
+    enabled: yes
+  become: yes
